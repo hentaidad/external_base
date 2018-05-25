@@ -96,6 +96,14 @@ void utilities::erase_pe()
 	RtlSecureZeroMemory(Base, 4096);
 }
 
+bool utilities::file_exists(std::string _file)
+{
+	if (std::experimental::filesystem::exists(_file))
+		return true;
+	else
+		return false;
+}
+
 bool utilities::set_debug(bool _status)
 {
 	HANDLE hToken = INVALID_HANDLE_VALUE;
