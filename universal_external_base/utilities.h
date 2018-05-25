@@ -94,6 +94,13 @@ public:
 	float w;
 };
 
+struct unique_handle_deleter {
+	void operator()(void* handle) const noexcept
+	{
+		CloseHandle(handle);
+	}
+};
+
 class utilities 
 {
 public:
