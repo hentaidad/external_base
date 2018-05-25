@@ -61,7 +61,7 @@ HANDLE utilities::get_handle(ULONG _processId, ULONG _desiredAccess, bool _prote
 	return hProcess;
 }
 
-uintptr_t utilities::get_base(ULONG _processId, TCHAR *_module)
+uintptr_t utilities::get_base(ULONG _processId, const TCHAR *_module)
 {
 	uintptr_t modBase = 0;
 
@@ -190,7 +190,7 @@ template <typename T> T utilities::RPM(HANDLE _handle, SIZE_T _address)
 	return buffer;
 }
 
-template <typename T> T utilities::WPM(HANDLE _handle, SIZE_T _address, T _data)
+template <typename T> T utilities::WPM(HANDLE _handle, SIZE_T _address, const T &_data)
 {
 	if (address == nullptr)
 		return;
