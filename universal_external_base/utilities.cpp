@@ -1,11 +1,11 @@
 #include "utilities.h"
 #include "lazy_importer.hpp"
 
-auto base = reinterpret_cast<uintptr_t>(LI_FIND(LoadLibraryA)("Kernel32.dll"));
+//auto base = reinterpret_cast<uintptr_t>(LI_FIND(LoadLibraryA)("Kernel32.dll"));
 
 utilities g_Utils;
 
-ULONG utilities::get_pid(const std::string &_process)
+ULONG utilities::get_pid(std::string _process)
 {
 	HANDLE Snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 
@@ -35,21 +35,21 @@ ULONG utilities::get_pid(const std::string &_process)
 	return NULL;
 }
 
-HWND utilities::get_window(const LPCSTR &_windowName)
+HWND utilities::get_window(LPCSTR _windowName)
 {
 	HWND hWindow = FindWindowA(NULL, _windowName);
 
-	if (hWindow == INVALID_HANDLE_VALUE)
+	if (hWindow == NULL)
 		return NULL;
 
 	return hWindow;
 }
 
-HANDLE utilities::get_handle(const ULONG &_processId, const ULONG &_desiredAccess, bool _protect)
+HANDLE utilities::get_handle(ULONG _processId, ULONG _desiredAccess, bool _protect)
 {
 	HANDLE hProcess = OpenProcess(_desiredAccess, false, _processId);
 
-	if (hProcess == INVALID_HANDLE_VALUE)
+	if (hProcess == NULL)
 		return NULL;
 
 	if (_protect == true)
@@ -61,7 +61,7 @@ HANDLE utilities::get_handle(const ULONG &_processId, const ULONG &_desiredAcces
 	return hProcess;
 }
 
-uintptr_t utilities::get_base(const ULONG &_processId, const TCHAR *_module)
+uintptr_t utilities::get_base(ULONG _processId, TCHAR *_module)
 {
 	uintptr_t modBase = 0;
 
@@ -161,11 +161,13 @@ ULONG utilities::find_pattern(HANDLE _handle, ULONG _base, ULONG _len, BYTE* _pa
 				}
 				else if (_mask[x] == 0x00) {
 					return (ULONG)(_base + i + _offset);
+					VirtualFree(0, _len, MEM_DECOMMIT);
 				}
 			}
 		}
 	}
 
+	VirtualFree(0, _len, MEM_DECOMMIT);
 	return NULL;
 }
 

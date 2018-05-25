@@ -97,10 +97,10 @@ public:
 class utilities 
 {
 public:
-	ULONG get_pid(const std::string &_process);
-	HWND get_window(const LPCSTR &_windowName);
-	HANDLE get_handle(const ULONG &_process, const ULONG &_desiredAccess, bool _protect);
-	uintptr_t get_base(const ULONG &_processId, const TCHAR *_module);
+	ULONG get_pid(std::string _process);
+	HWND get_window(LPCSTR _windowName);
+	HANDLE get_handle(ULONG _process, ULONG _desiredAccess, bool _protect);
+	uintptr_t get_base(ULONG _processId, TCHAR *_module);
 	ULONG find_pattern(HANDLE _handle, ULONG _base, ULONG _len, BYTE* _pat, char* _mask, int _offset = 0);
 	bool set_debug(bool _status);
 	bool nop_bytes(HANDLE _handle, uintptr_t _address, SIZE_T _size);
