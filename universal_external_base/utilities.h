@@ -104,6 +104,7 @@ public:
 	ULONG find_pattern(HANDLE _handle, ULONG _base, ULONG _len, BYTE* _pat, char* _mask, int _offset = 0);
 	bool set_debug(bool _status);
 	bool nop_bytes(HANDLE _handle, uintptr_t _address, SIZE_T _size);
+	template <typename T> bool is_valid(T _address);
 	void erase_pe();
 	bool file_exists(std::string _file);
 	template <typename T> T RPM(HANDLE _handle, SIZE_T _address);

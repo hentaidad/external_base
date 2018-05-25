@@ -61,6 +61,14 @@ HANDLE utilities::get_handle(ULONG _processId, ULONG _desiredAccess, bool _prote
 	return hProcess;
 }
 
+template <typename T> bool utilities::is_valid(T _address)
+{
+	if (_address == NULL)
+		return false;
+
+	return (_address & sizeof(_address)) ? true : false;
+}
+
 uintptr_t utilities::get_base(ULONG _processId, const TCHAR *_module)
 {
 	uintptr_t modBase = 0;
